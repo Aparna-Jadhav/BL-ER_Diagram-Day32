@@ -1,0 +1,375 @@
+AddressBook_System:
+
+
+
+//UC-1
+
+
+mysql> SHOW DATABASES;
++---------------------+
+| Database            |
++---------------------+
+| addressbook_service |
+| addressbook_system  |
+| employee_payroll    |
+| information_schema  |
+| mysql               |
+| payroll_details     |
+| payroll_service     |
+| performance_schema  |
+| person              |
+| sakila              |
+| student             |
+| sys                 |
+| world               |
++---------------------+
+13 rows in set (0.01 sec)
+
+
+
+mysql> use addressbook_system;
+Database changed
+
+
+mysql> DESCRIBE addressbook_system;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| FirstName | varchar(20) | NO   |     | NULL    |       |
+| LastName  | varchar(20) | NO   |     | NULL    |       |
+| Address   | varchar(30) | NO   |     | NULL    |       |
+| City      | varchar(20) | NO   |     | NULL    |       |
+| State     | varchar(20) | NO   |     | NULL    |       |
+| PhoneNum  | bigint      | NO   |     | NULL    |       |
+| EmailId   | varchar(30) | NO   |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+7 rows in set (0.01 sec)
+
+
+mysql> ALTER TABLE AddressBook_system ADD Zip bigint;
+Query OK, 0 rows affected (0.66 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+mysql> DESCRIBE addressbook_system;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| FirstName | varchar(20) | NO   |     | NULL    |       |
+| LastName  | varchar(20) | NO   |     | NULL    |       |
+| Address   | varchar(30) | NO   |     | NULL    |       |
+| City      | varchar(20) | NO   |     | NULL    |       |
+| State     | varchar(20) | NO   |     | NULL    |       |
+| PhoneNum  | bigint      | NO   |     | NULL    |       |
+| EmailId   | varchar(30) | NO   |     | NULL    |       |
+| Zip       | bigint      | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+8 rows in set (0.08 sec)
+
+
+mysql> ALTER TABLE AddressBook_system MODIFY Zip bigint NOT NULL;
+Query OK, 0 rows affected (2.46 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+mysql> DESCRIBE addressbook_system;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| FirstName | varchar(20) | NO   |     | NULL    |       |
+| LastName  | varchar(20) | NO   |     | NULL    |       |
+| Address   | varchar(30) | NO   |     | NULL    |       |
+| City      | varchar(20) | NO   |     | NULL    |       |
+| State     | varchar(20) | NO   |     | NULL    |       |
+| PhoneNum  | bigint      | NO   |     | NULL    |       |
+| EmailId   | varchar(30) | NO   |     | NULL    |       |
+| Zip       | bigint      | NO   |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+8 rows in set (0.07 sec)
+
+
+
+//UC-2
+
+
+mysql> CREATE TABLE addressbook(firstName varchar(20),lastName varchar(20),addre
+ss varchar(20),city varchar(20),state varchar(20),zip bigint(10),phoneNumber big
+int(10),email varchar(40));
+Query OK, 0 rows affected, 2 warnings (1.12 sec)
+
+mysql> DESCRIBE addressbook;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| firstName   | varchar(20) | YES  |     | NULL    |       |
+| lastName    | varchar(20) | YES  |     | NULL    |       |
+| address     | varchar(20) | YES  |     | NULL    |       |
+| city        | varchar(20) | YES  |     | NULL    |       |
+| state       | varchar(20) | YES  |     | NULL    |       |
+| zip         | bigint      | YES  |     | NULL    |       |
+| phoneNumber | bigint      | YES  |     | NULL    |       |
+| email       | varchar(40) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+8 rows in set (0.13 sec)
+
+
+
+//UC-3
+
+mysql> INSERT INTO addressbook VALUES('Aparna','Jadhav','Katraj','Pune','MH', 41
+1047, 1122334455,'aparna@gmail');
+Query OK, 1 row affected (0.09 sec)
+
+mysql> INSERT INTO addressbook VALUES('Sujata','Mete','Karnik Nagar','Solapur','
+MH', 411013, 2233445566,'sujata@gmail');
+Query OK, 1 row affected (0.19 sec)
+
+mysql> INSERT INTO addressbook VALUES('Sujata','Mete','Karnik Nagar','Solapur','
+MH', 40000, 3344556677,'vinakayak@gmail');
+Query OK, 1 row affected (0.12 sec)
+
+mysql> INSERT INTO addressbook VALUES('Vinayak','Mete','Basav Nagar','Vijayapur'
+,'MH', 400001, 3344556677,'vinakayak@gmail');
+Query OK, 1 row affected (0.14 sec)
+
+mysql> DELETE FROM addressbook WHERE Email='vinayak@gmail';
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> SELECT * FROM addressbook;
++-----------+----------+--------------+-----------+-------+--------+------------
+-+-----------------+
+| firstName | lastName | address      | city      | state | zip    | phoneNumber
+ | email           |
++-----------+----------+--------------+-----------+-------+--------+------------
+-+-----------------+
+| Aparna    | Jadhav   | Katraj       | Pune      | MH    | 411047 |  1122334455
+ | aparna@gmail    |
+| Sujata    | Mete     | Karnik Nagar | Solapur   | MH    | 411013 |  2233445566
+ | sujata@gmail    |
+| Sujata    | Mete     | Karnik Nagar | Solapur   | MH    |  40000 |  3344556677
+ | vinakayak@gmail |
+| Vinayak   | Mete     | Basav Nagar  | Vijayapur | MH    | 400001 |  3344556677
+ | vinakayak@gmail |
++-----------+----------+--------------+-----------+-------+--------+------------
+-+-----------------+
+4 rows in set (0.00 sec)
+
+
+
+//UC-4
+
+mysql> update addressbook set lastName ='Mane' where firstName = 'Sujata';
+Query OK, 2 rows affected (0.10 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select * from addressbook;
++-----------+----------+--------------+-----------+-------+--------+------------
+-+-----------------+
+| firstName | lastName | address      | city      | state | zip    | phoneNumber
+ | email           |
++-----------+----------+--------------+-----------+-------+--------+------------
+-+-----------------+
+| Aparna    | Jadhav   | Katraj       | Pune      | MH    | 411047 |  1122334455
+ | aparna@gmail    |
+| Sujata    | Mane     | Karnik Nagar | Solapur   | MH    | 411013 |  2233445566
+ | sujata@gmail    |
+| Sujata    | Mane     | Karnik Nagar | Solapur   | MH    |  40000 |  3344556677
+ | vinakayak@gmail |
+| Vinayak   | Mete     | Basav Nagar  | Vijayapur | MH    | 400001 |  3344556677
+ | vinakayak@gmail |
++-----------+----------+--------------+-----------+-------+--------+------------
+-+-----------------+
+4 rows in set (0.02 sec)
+
+
+
+//UC-5
+
+
+mysql> delete from addressbook where zip = 40000;
+Query OK, 1 row affected (0.14 sec)
+
+mysql> select * from addressbook;
++-----------+----------+--------------+-----------+-------+--------+------------
+-+-----------------+
+| firstName | lastName | address      | city      | state | zip    | phoneNumber
+ | email           |
++-----------+----------+--------------+-----------+-------+--------+------------
+-+-----------------+
+| Aparna    | Jadhav   | Katraj       | Pune      | MH    | 411047 |  1122334455
+ | aparna@gmail    |
+| Sujata    | Mane     | Karnik Nagar | Solapur   | MH    | 411013 |  2233445566
+ | sujata@gmail    |
+| Vinayak   | Mete     | Basav Nagar  | Vijayapur | MH    | 400001 |  3344556677
+ | vinakayak@gmail |
++-----------+----------+--------------+-----------+-------+--------+------------
+-+-----------------+
+3 rows in set (0.00 sec)
+
+
+
+//UC-6
+
+
+mysql> select lastName from addressbook where city = 'Pune';
++----------+
+| lastName |
++----------+
+| Jadhav   |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select lastName from addressBook where city = 'Solapur' or state = 'MH';
++----------+
+| lastName |
++----------+
+| Jadhav   |
+| Mane     |
+| Mete     |
++----------+
+3 rows in set (0.00 sec)
+
+
+
+
+//UC-7
+
+
+mysql> select COUNT(lastName) from addressBook where city = 'Solapur' and state
+= 'MH';
++-----------------+
+| COUNT(lastName) |
++-----------------+
+|               1 |
++-----------------+
+1 row in set (0.00 sec)
+
+
+
+//UC-8
+
+
+mysql> select * from addressBook order by lastName;
++-----------+----------+--------------+-----------+-------+--------+------------
+-+-----------------+
+| firstName | lastName | address      | city      | state | zip    | phoneNumber
+ | email           |
++-----------+----------+--------------+-----------+-------+--------+------------
+-+-----------------+
+| Aparna    | Jadhav   | Katraj       | Pune      | MH    | 411047 |  1122334455
+ | aparna@gmail    |
+| Sujata    | Mane     | Karnik Nagar | Solapur   | MH    | 411013 |  2233445566
+ | sujata@gmail    |
+| Vinayak   | Mete     | Basav Nagar  | Vijayapur | MH    | 400001 |  3344556677
+ | vinakayak@gmail |
++-----------+----------+--------------+-----------+-------+--------+------------
+-+-----------------+
+3 rows in set (0.01 sec)
+
+
+
+//UC-9
+
+
+
+mysql> alter table addressbook add family varchar(20);
+Query OK, 0 rows affected (1.80 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table addressbook add friends varchar(20);
+Query OK, 0 rows affected (0.81 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table addressbook add professions varchar(20);
+Query OK, 0 rows affected (0.49 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+mysql> select * from addressBook;
++-----------+----------+--------------+-----------+-------+--------+------------
+-+-----------------+--------+---------+-------------+
+| firstName | lastName | address      | city      | state | zip    | phoneNumber
+ | email           | family | friends | professions |
++-----------+----------+--------------+-----------+-------+--------+------------
+-+-----------------+--------+---------+-------------+
+| Aparna    | Jadhav   | Katraj       | Pune      | MH    | 411047 |  1122334455
+ | aparna@gmail    | NULL   | NULL    | NULL        |
+| Sujata    | Mane     | Karnik Nagar | Solapur   | MH    | 411013 |  2233445566
+ | sujata@gmail    | NULL   | NULL    | NULL        |
+| Vinayak   | Mete     | Basav Nagar  | Vijayapur | MH    | 400001 |  3344556677
+ | vinakayak@gmail | NULL   | NULL    | NULL        |
++-----------+----------+--------------+-----------+-------+--------+------------
+-+-----------------+--------+---------+-------------+
+3 rows in set (0.00 sec)
+
+
+mysql> update addressbook set family='Brother' where firstName='Vinayak';
+Query OK, 1 row affected (0.10 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update addressbook set family='Sister' where firstName='Sujata';
+Query OK, 1 row affected (0.69 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+
+
+//UC-10
+
+
+
+
+mysql> select COUNT(family) from addressBook;
++---------------+
+| COUNT(family) |
++---------------+
+|             2 |
++---------------+
+1 row in set (0.00 sec)
+
+
+
+
+//UC-11
+
+
+
+mysql> INSERT INTO addressbook VALUES('Abu','Jadhav','Katraj','Pune','MH', 40000
+4, 6677889900,'abhi@gmail','Brother', 'Yes', 'Engineer');
+Query OK, 1 row affected (0.13 sec)
+
+mysql> INSERT INTO addressbook VALUES('Pratiksha','Mache','ShivajiPark','Ahamadn
+agar','MH', 400003, 5566778899,'pratiksha@gmail','No', 'Yes', 'Accountant');
+Query OK, 1 row affected (0.14 sec)
+
+mysql> INSERT INTO addressbook VALUES('Rahul','Kumbhar','WagholiGoan','Osmanabad
+','MH', 400002, 4455667788,'Rahul@gmail', 'No', 'Yes', 'Marketing');
+Query OK, 1 row affected (0.10 sec)
+
+
+mysql> select * from addressBook;
++-----------+----------+--------------+-------------+-------+--------+----------
+---+-----------------+---------+---------+-------------+
+| firstName | lastName | address      | city        | state | zip    | phoneNumb
+er | email           | family  | friends | professions |
++-----------+----------+--------------+-------------+-------+--------+----------
+---+-----------------+---------+---------+-------------+
+| Aparna    | Jadhav   | Katraj       | Pune        | MH    | 411047 |  11223344
+55 | aparna@gmail    | NULL    | NULL    | NULL        |
+| Sujata    | Mane     | Karnik Nagar | Solapur     | MH    | 411013 |  22334455
+66 | sujata@gmail    | Sister  | NULL    | NULL        |
+| Vinayak   | Mete     | Basav Nagar  | Vijayapur   | MH    | 400001 |  33445566
+77 | vinakayak@gmail | Brother | NULL    | NULL        |
+| Abu       | Jadhav   | Katraj       | Pune        | MH    | 400004 |  66778899
+00 | abhi@gmail      | Brother | Yes     | Engineer    |
+| Pratiksha | Mache    | ShivajiPark  | Ahamadnagar | MH    | 400003 |  55667788
+99 | pratiksha@gmail | No      | Yes     | Accountant  |
+| Rahul     | Kumbhar  | WagholiGoan  | Osmanabad   | MH    | 400002 |  44556677
+88 | Rahul@gmail     | No      | Yes     | Marketing   |
++-----------+----------+--------------+-------------+-------+--------+----------
+---+-----------------+---------+---------+-------------+
+6 rows in set (0.00 sec)
+
+
+mysql> update addressbook set family='Brother' where firstName ='abu';
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 1  Changed: 0  Warnings: 0
